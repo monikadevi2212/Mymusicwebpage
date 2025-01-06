@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Express</title>
+    <style>
+        /* Simple styling to make the form more user-friendly */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5em;
+        }
+        label {
+            font-size: 1.1em;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .result {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Package Express. Please follow the instructions below.</h1>
+        
+        <!-- Package weight input -->
+        <label for="weight">Please enter the package weight (in lbs):</label>
+        <input type="number" id="weight" placeholder="Weight in lbs" required>
+
+        <!-- Package dimensions inputs -->
+        <label for="width">Please enter the package width (in inches):</label>
+        <input type="number" id="width" placeholder="Width in inches" required>
+
+        <label for="height">Please enter the package height (in inches):</label>
+        <input type="number" id="height" placeholder="Height in inches" required>
+
+        <label for="length">Please enter the package length (in inches):</label>
+        <input type="number" id="length" placeholder="Length in inches" required>
+
+        <!-- Button to calculate shipping -->
+        <button class="button" onclick="calculateQuote()">Get Quote</button>
+
+        <!-- Display result or error messages -->
+        <div id="errorMessage" class="error"></div>
+        <div id="quoteResult" class="result"></div>
+    </div>
+
+    <script>
+        // Function to calculate the shipping quote
+        function calculateQuote() {
+            // Retrieve the values entered by the user
+            const weight = parseFloat(document.getElementById("weight").value);
+            const width = parseFloat(document.getElementById("width").value);
+            const height = parseFloat(document.getElementById("height").value);
+            const length = parseFloat(document.getElementById("length").value);
+
+            // Reset previous error and quote results
+            document.getElementById("errorMessage").innerText = '';
+            document.getElementById("quoteResult").innerText = '';
+
+            // Check if the weight is greater than 50
+            if (weight > 50) {
+                document.getElementById("errorMessage").innerText = "Package too heavy to be shipped via Package Express. Have a good day.";
+                return; // Exit the function if weight is too heavy
+            }
+
+            // Check if the total dimensions exceed 50
+            if (width + height + length > 50) {
+                document.getElementById("errorMessage").innerText = "Package too big to be shipped via Package Express.";
+                return; // Exit the function if dimensions are too big
+            }
+
+            // Calculate the shipping quote
+            const volume = width * height * length;  // Volume of the package
+            const quote = (volume * weight) / 100;  // Final quote calculation
+
+            // Display the shipping quote
+            document.getElementById("quoteResult").innerText = `Your estimated total for shipping this package is: $${quote.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
